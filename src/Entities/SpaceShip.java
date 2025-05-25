@@ -44,6 +44,27 @@ public class SpaceShip extends Entities {
         this.lives = lives;
     }
 
+    public void moveLeft() {
+        int oldX = getPosition().getX();
+        int newX = Math.max(0, oldX - 10);
+        getPosition().setX(newX);
+        System.out.println("moveLeft: " + oldX + " -> " + newX);
+    }
+
+
+    public void moveRight(int panelWidth) {
+        int oldX = getPosition().getX();
+        int newX = Math.min(panelWidth - 60, oldX + 10);
+        getPosition().setX(newX);
+        System.out.println("moveRight: " + oldX + " -> " + newX);
+    }
+
+
+    @Override
+    public Position getPosition() {
+        return position; // ← svarbu: grąžina tikrą objektą
+    }
+
     @Override
     public void destroy() {
         lives--;

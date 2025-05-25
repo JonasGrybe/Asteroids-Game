@@ -11,6 +11,10 @@ public class LargeAlien extends Entities implements Cloneable, Serializable {
 
     private int armor;
     private boolean hasShield;
+    private double time ; // Laikas sinuso funkcijai
+    private double amplitude = 5; // Sinuso amplitudė (kiek toli šonuose juda)
+    private double frequency = 0.05;
+    private double phase;
 
     // Paveikslėlio laukas - transient, nes Image ne serializuojamas
     private transient Image image;
@@ -25,10 +29,10 @@ public class LargeAlien extends Entities implements Cloneable, Serializable {
     }
 
     public LargeAlien() {
-        this(new Position(0, 0), 0.0, 0.0, 3);
+        this(new Position(0, 0), 0.0, 0.0, 3, false);
     }
 
-    public LargeAlien(Position position, double velocityX, double velocityY, int armor) {
+    public LargeAlien(Position position, double velocityX, double velocityY, int armor, boolean startLeft) {
         super(position, velocityX, velocityY);
         this.image = loadImage();
 
@@ -37,8 +41,9 @@ public class LargeAlien extends Entities implements Cloneable, Serializable {
         } else {
             this.armor = 3;
         }
-
+        this.time = Math.random() * 100;
         this.hasShield = false;
+        this.phase = startLeft ? Math.PI : 0;
     }
 
     // Šis metodas reikalingas, kad atkūrus objektą iš failo, paveikslėlis būtų atstatytas
@@ -64,6 +69,24 @@ public class LargeAlien extends Entities implements Cloneable, Serializable {
             throw new InvalidValueException("Armor cannot be negative!", "Armor", armor, "Large Alien");
         }
         this.armor = armor;
+    }
+
+    @Override
+    public void move() {
+        // Judėjimas žemyn (vertikaliai)
+        position.setY(position.getY() + (int)velocityY);
+
+        // Sinuso judėjimas horizontaliai
+        double newX = position.getX() + amplitude * Math.sin(time * frequency + phase);
+        position.setX((int)newX);
+
+        // Didina laiką sinuso funkcijai
+        time += 1;
+
+        // Jei nukrito žemiau ekrano, grąžina į viršų
+        if (position.getY() > 600) {
+            destroy(); // Resetina sinuso ciklą
+        }
     }
 
     @Override

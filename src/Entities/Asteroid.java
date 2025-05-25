@@ -37,6 +37,14 @@ public class Asteroid extends Entities {
         setVelocityY(newVelocityY);
     }
 
+    @Override
+    public void move() {
+        position.setY(position.getY() + (int)velocityY);
+
+        if (position.getY() > 600) {
+            destroy();
+        }
+    }
 
     @Override
     public void destroy() {

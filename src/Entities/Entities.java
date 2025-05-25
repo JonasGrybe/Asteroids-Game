@@ -8,8 +8,8 @@ public abstract class Entities implements Boostable, Serializable {
     public static final int MAX_VELOCITY = 5;
 
     public Position position;
-    private double velocityX = 0.0;
-    private double velocityY = 0.0;
+    public double velocityX = 0.0;
+    public double velocityY = 0.0;
     private boolean active;
     private boolean ability;
 
