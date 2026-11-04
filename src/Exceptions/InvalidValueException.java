@@ -1,5 +1,7 @@
 package Exceptions;
-
+/**
+ * Netinkamų verčių laukui išimtys.
+ */
 public class InvalidValueException extends GameException {
     private String fieldName;
     private int invalidValue;

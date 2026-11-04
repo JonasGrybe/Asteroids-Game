@@ -1,4 +1,9 @@
 package test;
-
-public class Difficulty {
+/**
+ * Žzaidimo sudėtingumo pasirinkimai.
+ */
+public enum Difficulty {
+    EASY,
+    MEDIUM,
+    HARD
 }
